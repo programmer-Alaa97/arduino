@@ -1,0 +1,46 @@
+int x;
+int y;
+int z;
+int led1=6;
+int led2=3;
+int sens=7;
+void setup()
+{
+ pinMode(led1, OUTPUT);
+ pinMode(led2, OUTPUT);
+ pinMode(A2,INPUT);
+ pinMode(sens,INPUT);
+
+ Serial.begin(9600);
+}
+void loop()
+{
+
+ x = analogRead(A2);
+
+ z = digitalRead(sens);
+
+ y=map(x,0,1023,0,255);
+
+ if(y>100 and z == HIGH){
+
+ analogWrite(led1,HIGH);
+ analogWrite(led2,LOW);
+
+ }
+ else if (y<100 and z == HIGH) {
+
+
+ analogWrite(led2,HIGH);
+ analogWrite(led1,LOW);
+ }
+
+ Serial.print(x);
+
+ Serial.print(" ");
+
+ Serial.println (y);
+
+ delay(1000);
+
+}

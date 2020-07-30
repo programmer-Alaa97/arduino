@@ -1,0 +1,90 @@
+int trigpin= 13;
+int echopin= 10;
+int ledr= 6;
+int ledy= 7;
+int ledg= 8;
+int ledb= 9;
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+void setup() {
+
+ Serial.begin(9600);
+
+ lcd.begin(16, 2);
+
+// lcd.print("hello, world!");
+
+ pinMode(ledr,OUTPUT);
+ pinMode(ledy,OUTPUT);
+ pinMode(ledg,OUTPUT);
+ pinMode(ledb,OUTPUT);
+ pinMode(trigpin,OUTPUT);
+ pinMode(echopin,INPUT);
+
+}
+void loop() {
+ int du , di ;
+
+digitalWrite ( trigpin , HIGH );
+ digitalWrite ( trigpin , LOW );
+
+ du = pulseIn ( echopin ,1);
+ di =( du / 2 ) /29.1 ;
+
+
+ if ( di > 20 && di < 40){
+ lcd.setCursor(0, 0);
+digitalWrite ( ledr , HIGH);
+ digitalWrite ( ledg , LOW);
+ digitalWrite ( ledy , LOW);
+ digitalWrite ( ledb , LOW);
+ Serial.print (di);
+ Serial.println ("cm");
+ lcd.print("the ledr is open");
+ }
+
+ else if ( di > 40 && di < 60){
+ lcd.setCursor(0, 0);
+ digitalWrite ( ledr , LOW); 
+ digitalWrite ( ledg , HIGH);
+ digitalWrite ( ledy , LOW);
+ digitalWrite ( ledb , LOW);
+ Serial.print (di);
+ Serial.println ("cm");
+ lcd.print("the ledg is open");
+
+ }
+
+
+
+
+ else if ( di > 60 && di < 80){
+ lcd.setCursor(0, 0);
+ digitalWrite ( ledr , LOW);
+ digitalWrite ( ledg , LOW);
+ digitalWrite ( ledy , HIGH);
+ digitalWrite ( ledb , LOW);
+ Serial.print (di);
+ Serial.println ("cm");
+ lcd.print("the ledy is open");
+ }
+
+
+
+
+
+ else if ( di > 80 && di < 100){
+ lcd.setCursor(0, 0); 
+ digitalWrite ( ledr , LOW);
+ digitalWrite ( ledg , LOW);
+ digitalWrite ( ledy , LOW);
+ digitalWrite ( ledb , HIGH);
+ Serial.print (di);
+ Serial.println ("cm");
+ lcd.print("the ledb is open");
+ }
+ delay (500);
+
+lcd.setCursor(0, 1);
+
+}
